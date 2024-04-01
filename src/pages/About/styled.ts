@@ -14,20 +14,20 @@ export const Card = styled("div")`
   &:last-of-type {
     margin-left: 20px;
   }
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     &:first-of-type {
-    margin-right: 0;
-  }
-  &:last-of-type {
-    margin-left: 0;
-  }
+      margin-right: 0;
+    }
+    &:last-of-type {
+      margin-left: 0;
+    }
     margin-top: 30px;
   }
 `;
 
 export const TechWrapperMain = styled("div")`
   display: flex;
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     flex-wrap: wrap;
   }
 `;
@@ -36,7 +36,7 @@ export const SmallTitle = styled("h4")`
   font-size: 1.5rem;
   margin: 0;
   margin-bottom: 50px;
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     font-size: 1rem;
   }
 `;
@@ -56,17 +56,25 @@ export const Pill = styled("div")`
   padding: 10px 30px;
   flex-grow: 1;
   border-radius: 5px;
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     padding: 5px 15px;
     font-size: 0.8rem;
   }
 `;
 export const OffersWrapper = styled("div")`
   display: flex;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const Offer = styled("div")`
   width: 50%;
   text-align: center;
   padding: 20px;
+  @media (max-width: 600px) {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+  }
 `;
