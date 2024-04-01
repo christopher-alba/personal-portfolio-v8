@@ -10,6 +10,7 @@ import {
   ImageDivWide,
   ImagesWrapper,
   Overlay,
+  OverlayInner,
 } from "./styled";
 import { Entry } from "contentful";
 import { StyledLink } from "../../components/HeroArea/styled";
@@ -51,7 +52,9 @@ const Projects: FC<{ contentful?: Entry }> = (contentful) => {
                   state={x}
                   style={{ display: "block" }}
                 >
-                  <Overlay>{x.name}</Overlay>
+                  <Overlay>
+                    <OverlayInner>{x.name}</OverlayInner>
+                  </Overlay>
                 </Link>
                 <Image src={x.imgSrc} />
               </ImageDiv>
@@ -69,7 +72,9 @@ const Projects: FC<{ contentful?: Entry }> = (contentful) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Overlay>{x.name}</Overlay>
+                <Overlay>
+                  <OverlayInner>{x.name}</OverlayInner>
+                </Overlay>
               </StyledLink>
               <Image src={x.imageUrl} />
             </ImageDivWide>

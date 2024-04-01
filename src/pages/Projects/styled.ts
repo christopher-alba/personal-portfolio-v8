@@ -69,7 +69,18 @@ export const Overlay = styled("div")`
   background: ${({ theme }) => theme.colors.primary2};
   display: flex;
   align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.secondary1};
+  color: ${({ theme }) => theme.colors.secondary1 + "AA"};
   font-weight: 700;
+`;
+export const OverlayInner = styled("div")`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid ${({ theme }) => theme.colors.secondary1 + "22"};
 `;
