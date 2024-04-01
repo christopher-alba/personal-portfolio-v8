@@ -1,35 +1,133 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { DefaultTheme, ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./themes/globalStyles";
+import { useEffect, useState } from "react";
+import { Entry } from "contentful";
+import { client } from "./main";
+import { Route, Routes } from "react-router-dom";
+import About from "./pages/About";
+import Career from "./pages/Career";
+import Project from "./pages/Project/Project";
+import Projects from "./pages/Projects";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [contentful, setContentful] = useState<Entry>();
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme")?.length ?? -1 > 0
+      ? JSON.parse(localStorage.getItem("theme") as string)
+      : (contentful?.fields.themes as DefaultTheme)?.light
+  );
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+  useEffect(() => {
+    client
+      .getEntry(import.meta.env.VITE_CONTENTFUL_ENTRY_ID)
+      .then((entry) => {
+        console.log(entry);
+        setContentful(entry);
+      })
+      .catch(console.error);
+  }, []);
+
+  const updateTheme = (themeName: string) => {
+    if (themeName === "light") {
+      localStorage.setItem(
+        "theme",
+        JSON.stringify((contentful?.fields.themes as any).light)
+      );
+      setTheme((contentful?.fields.themes as any).light);
+    } else {
+      localStorage.setItem(
+        "theme",
+        JSON.stringify((contentful?.fields.themes as any).dark)
+      );
+      setTheme((contentful?.fields.themes as any).dark);
+    }
+  };
+
+  useEffect(() => {
+    if (contentful !== undefined) {
+      const localTheme: DefaultTheme | null = JSON.parse(
+        localStorage.getItem("theme") ?? "{}"
+      ) as DefaultTheme | null;
+
+      if (localTheme?.name) {
+        //compare values with contentful theme
+        console.log(localTheme);
+
+        if (localTheme.name === "light") {
+          if (
+            JSON.stringify((contentful?.fields.themes as any).light) !==
+            JSON.stringify(localTheme)
+          ) {
+            updateTheme("light");
+          }
+        } else if (localTheme.name === "dark") {
+          if (
+            JSON.stringify((contentful?.fields.themes as any).dark) !==
+            JSON.stringify(localTheme)
+          ) {
+            updateTheme("dark");
+          }
+        }
+      } else {
+        localStorage.setItem(
+          "theme",
+          JSON.stringify((contentful?.fields.themes as any).light)
+        );
+        setTheme((contentful?.fields.themes as any).light);
+      }
+    }
+  }, [contentful]);
+
+  if (contentful === undefined || theme === undefined)
+    return (
+      <div className="mainWrapper">
+        <div className="lds-grid">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <h3 className="loadingText">Fetching content from Contentful.</h3>
+        <p className="loadingTextBottom">
+          Made by{" "}
+          <a
+            href="https://www.linkedin.com/in/christopher-alba/"
+            target="_blank"
+            className="link"
+          >
+            Christopher Sy Alba.
+          </a>
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    );
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Navbar setTheme={setTheme} contentful={contentful} />
+      <Routes>
+        <Route path="/" element={<About contentful={contentful} />} />
+        <Route path="/career" element={<Career contentful={contentful} />} />
+        <Route
+          path="/projects"
+          element={<Projects contentful={contentful} />}
+        />
+        <Route
+          path="/projects/:projectName"
+          element={<Project contentful={contentful} />}
+        />
+      </Routes>
+      <Footer />
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
