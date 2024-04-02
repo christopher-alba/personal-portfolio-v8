@@ -32,7 +32,7 @@ const HeroArea: FC<{
       <BackgroundImg src={imageUrl} ref={ref as any} />
       <MainBackgroundDiv>
         <UpperFade />
-        <Parallax speed={-70}>
+        <Parallax speed={-70} style={{ zIndex: 10 }}>
           <StyledContainer>
             <PageSummaryWrapper>
               <PageTitle>

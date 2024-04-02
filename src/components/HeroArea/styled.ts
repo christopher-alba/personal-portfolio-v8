@@ -27,13 +27,18 @@ export const MainBackgroundDiv = styled("div")`
 `;
 
 export const BackgroundImg = styled("img")`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: auto;
+  position: relative;
+  right: 0;
+  object-fit: cover;
+  float: right;
 `;
 
 export const StyledContainer = styled(Container)`
   display: flex;
   align-items: center;
+  z-index: 2;
   @media (max-width: 1500px) {
     flex-direction: column;
   }
@@ -41,7 +46,7 @@ export const StyledContainer = styled(Container)`
 export const PageSummaryWrapper = styled("div")`
   width: 350px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   @media (max-width: 600px) {
     width: 100%;
   }
@@ -58,7 +63,7 @@ export const NameWrapper = styled("div")`
     box-sizing: border-box;
     text-align: center;
     position: relative;
-    z-index: 1;
+    z-index: 20;
   }
 `;
 
@@ -87,6 +92,7 @@ export const LowerFade = styled("div")`
   width: 100%;
   @media (max-width: 1100px) {
     height: 100%;
+    z-index: 0;
   }
 `;
 
