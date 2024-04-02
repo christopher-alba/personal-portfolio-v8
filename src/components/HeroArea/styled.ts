@@ -32,7 +32,7 @@ export const BackgroundImg = styled("img")`
   position: relative;
   right: 0;
   object-fit: cover;
-  object-position: right
+  object-position: right;
 `;
 
 export const StyledContainer = styled(Container)`
