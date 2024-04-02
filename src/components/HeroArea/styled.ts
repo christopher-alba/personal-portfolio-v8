@@ -5,12 +5,13 @@ import GithubIcon from "../../assets/githubIcon.svg?react";
 import LinkedInIcon from "../../assets/linkedinIcon.svg?react";
 import { Container } from "../Container";
 
-type ImageProp = {
-  $imageUrl: string;
-};
-export const MainBackgroundDiv = styled("div")<ImageProp>`
+export const MainWrapper = styled("div")`
   min-height: 100vh;
-  background: ${({ $imageUrl }) => `url(${$imageUrl})`};
+  position: relative;
+  overflow: hidden;
+`;
+
+export const MainBackgroundDiv = styled("div")`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right;
@@ -18,7 +19,16 @@ export const MainBackgroundDiv = styled("div")<ImageProp>`
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+export const BackgroundImg = styled("img")`
+  height: 100%;
+  width: 100%;
 `;
 
 export const StyledContainer = styled(Container)`
