@@ -28,11 +28,11 @@ export const MainBackgroundDiv = styled("div")`
 
 export const BackgroundImg = styled("img")`
   height: 100vh;
-  width: auto;
+  width: 100%;
   position: relative;
   right: 0;
   object-fit: cover;
-  float: right;
+  object-position: right
 `;
 
 export const StyledContainer = styled(Container)`
