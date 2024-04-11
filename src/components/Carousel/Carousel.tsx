@@ -1,40 +1,18 @@
-import {
-  FC,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import {
-  CarouselSingle,
-  Circle,
-  ControlButtons,
-  MainDiv,
-} from "./styled";
-import Draggable from "react-draggable";
+import { FC, ReactNode, useContext, useRef, useState } from "react";
+import { CarouselSingle, Circle, ControlButtons, MainDiv } from "./styled";
+import { useDraggable } from "react-use-draggable-scroll";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { ThemeContext } from "styled-components";
 
 const Carousel: FC<{
   children: ReactNode[];
   relativeContainerName: string;
-}> = ({ children, relativeContainerName }) => {
-  const [boundsRight, setBoundsRight] = useState(0);
+}> = ({ children }) => {
+  const ref = useRef(); // We will use React useRef hook to reference the wrapping div:
+  const { events } = useDraggable(ref as any);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const windowWidth = useWindowWidth();
   const theme = useContext(ThemeContext);
-  useEffect(() => {
-    let lastItem = document.getElementsByClassName("carouselItem")[
-      document.getElementsByClassName("carouselItem").length - 1
-    ] as HTMLElement;
-    let container = document.getElementsByClassName(relativeContainerName)[0];
-
-    const boundsRight =
-      -container.getBoundingClientRect().right +
-      lastItem.getBoundingClientRect().right;
-
-    setBoundsRight(boundsRight);
-  }, []);
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -50,14 +28,9 @@ const Carousel: FC<{
 
   if (windowWidth > 600)
     return (
-      <>
-        <Draggable
-          axis="x"
-          bounds={{ left: -boundsRight, right: 0 }}
-        >
-          <MainDiv>{children.map((x) => x)}</MainDiv>
-        </Draggable>
-      </>
+      <MainDiv ref={ref as any} {...events}>
+        {children.map((x) => x)}
+      </MainDiv>
     );
 
   return (

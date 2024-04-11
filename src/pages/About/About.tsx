@@ -45,6 +45,7 @@ const About: FC<{ contentful?: Entry }> = (contentful) => {
         <OffersWrapper>
           <Offer>
             <SubTitle
+              style={{ marginTop: 0 }}
               mainText="What I can offer"
               description="As an employee"
             />
@@ -58,6 +59,7 @@ const About: FC<{ contentful?: Entry }> = (contentful) => {
           </Offer>
           <Offer>
             <SubTitle
+              style={{ marginTop: 0 }}
               mainText="Services I provide"
               description="As a freelancer"
             />

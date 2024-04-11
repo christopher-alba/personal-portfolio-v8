@@ -11,6 +11,7 @@ import Project from "./pages/Project/Project";
 import Projects from "./pages/Projects";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer/Footer";
+import { animated, useSpring } from "@react-spring/web";
 
 function App() {
   const [contentful, setContentful] = useState<Entry>();
@@ -81,6 +82,19 @@ function App() {
     }
   }, [contentful]);
 
+  const contentAnim = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    config: {
+      duration: 500,
+    },
+    delay: 100,
+  });
+
   if (contentful === undefined || theme === undefined)
     return (
       <div className="mainWrapper">
@@ -110,23 +124,25 @@ function App() {
     );
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Navbar setTheme={setTheme} contentful={contentful} />
-      <Routes>
-        <Route path="/" element={<About contentful={contentful} />} />
-        <Route path="/career" element={<Career contentful={contentful} />} />
-        <Route
-          path="/projects"
-          element={<Projects contentful={contentful} />}
-        />
-        <Route
-          path="/projects/:projectName"
-          element={<Project contentful={contentful} />}
-        />
-      </Routes>
-      <Footer />
-    </ThemeProvider>
+    <animated.div style={contentAnim}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Navbar setTheme={setTheme} contentful={contentful} />
+        <Routes>
+          <Route path="/" element={<About contentful={contentful} />} />
+          <Route path="/career" element={<Career contentful={contentful} />} />
+          <Route
+            path="/projects"
+            element={<Projects contentful={contentful} />}
+          />
+          <Route
+            path="/projects/:projectName"
+            element={<Project contentful={contentful} />}
+          />
+        </Routes>
+        <Footer />
+      </ThemeProvider>
+    </animated.div>
   );
 }
 

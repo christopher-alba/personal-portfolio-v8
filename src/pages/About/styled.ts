@@ -63,18 +63,35 @@ export const Pill = styled("div")`
 `;
 export const OffersWrapper = styled("div")`
   display: flex;
+  justify-content: space-between;
   @media (max-width: 600px) {
     flex-direction: column;
+    justify-content: flex-start;
   }
 `;
 
 export const Offer = styled("div")`
-  width: 50%;
-  text-align: center;
-  padding: 20px;
+  width: 49.5%;
+  text-align: left;
+  box-sizing: border-box;
+  margin-top: 150px;
+  background: ${({ theme }) => theme.colors.primary2};
+  &:first-of-type {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  &:last-of-type {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  padding: 60px;
   @media (max-width: 600px) {
     width: 100%;
     padding: 0;
+    margin-top: 50px;
     margin-bottom: 20px;
+    background: transparent;
   }
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;

@@ -20,21 +20,40 @@ import {
   UpperFade,
 } from "./styled";
 import { Parallax, useParallax } from "react-scroll-parallax";
+import { animated, easings, useSpring } from "@react-spring/web";
 
 const HeroArea: FC<{
   pageTitle: string;
   pageSubTitles: string[];
   imageUrl: string;
 }> = ({ pageTitle, pageSubTitles, imageUrl }) => {
-  const { ref } = useParallax({ speed: -50 });
+  const { ref } = useParallax({ speed: -50, opacity: [2, 0] });
+  const bgContentAnim = useSpring({
+    from: {
+      opacity: 0,
+      y: -200,
+    },
+    to: {
+      opacity: 1,
+      y: 0,
+    },
+    config: {
+      duration: 500,
+      easing: easings.easeInOutBack,
+    },
+  });
   return (
     <MainWrapper>
-      <BackgroundImg src={imageUrl} ref={ref as any} />
+      <BackgroundImg as={animated.img} src={imageUrl} ref={ref as any} />
       <MainBackgroundDiv>
         <UpperFade />
-        <Parallax speed={-70} style={{ zIndex: 10 }}>
+        <Parallax
+          speed={-25}
+          opacity={[2, 0, "easeInOut"]}
+          style={{ zIndex: 10 }}
+        >
           <StyledContainer>
-            <PageSummaryWrapper>
+            <PageSummaryWrapper style={bgContentAnim} as={animated.div}>
               <PageTitle>
                 {pageTitle}
                 <PageTitlePeriod>.</PageTitlePeriod>

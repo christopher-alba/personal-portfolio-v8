@@ -2,13 +2,18 @@ import styled from "styled-components";
 
 export const MainDiv = styled("div")`
   white-space: nowrap;
+  display: block;
+  flex-wrap: wrap;
   cursor: grab;
   position: relative;
   overflow-x: visible;
-  width: 100%;
+  overflow-y: hidden;
   height: 60vh;
   & > * {
     margin: 10px;
+    height: 50vh;
+    width: 400px;
+    overflow-y: auto;
   }
   transition: 500ms;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -17,6 +22,9 @@ export const MainDiv = styled("div")`
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Controls = styled("div")`
