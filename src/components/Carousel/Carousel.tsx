@@ -9,7 +9,9 @@ const Carousel: FC<{
   relativeContainerName: string;
 }> = ({ children }) => {
   const ref = useRef(); // We will use React useRef hook to reference the wrapping div:
-  const { events } = useDraggable(ref as any);
+  const { events } = useDraggable(ref as any, {
+    isMounted: true,
+  });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const windowWidth = useWindowWidth();
   const theme = useContext(ThemeContext);
@@ -28,7 +30,7 @@ const Carousel: FC<{
 
   if (windowWidth > 600)
     return (
-      <MainDiv ref={ref as any} {...events}>
+      <MainDiv {...events} ref={ref as any}>
         {children.map((x) => x)}
       </MainDiv>
     );
